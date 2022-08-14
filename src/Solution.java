@@ -8,7 +8,7 @@ class Solution {
         return res;
     }
 
-    int max_profit_rec(int[] p, int cool, int i, int j, int[][] dp) {
+    int max_profit_rec(int[] p, int i, int j, int[][] dp) {
 
         int n = p.length;
 
@@ -33,11 +33,11 @@ class Solution {
 
         if(j < n - 1) {
             // Sell stock bought at day i on day j and buy stock on day j, at least two days later
-            int prof_loc1 = p[j] - p[i] + max_profit_rec(p, 1, j + 2, j + 3, dp);
+            int prof_loc1 = p[j] - p[i] + max_profit_rec(p, j + 2, j + 3, dp);
             // Sell stock bought at day i at a later day
-            int prof_loc2 = max_profit_rec(p, 0, i, j + 1, dp);
+            int prof_loc2 = max_profit_rec(p, i, j + 1, dp);
             // Do not buy stock at day i and instead buy stock at a later day
-            int prof_loc3 = max_profit_rec(p, 0, i + 1, i + 2, dp);
+            int prof_loc3 = max_profit_rec(p, i + 1, i + 2, dp);
 
             // Compute max profit
             profit = max(profit, prof_loc1);
@@ -71,7 +71,7 @@ class Solution {
 
         init_dp(dp);
 
-        return max_profit_rec(prices, 0, 0, 1, dp);
+        return max_profit_rec(prices, 0, 1, dp);
     }
 
     public int maxProfit(int[] prices) {
